@@ -1,0 +1,483 @@
+<h1 class="text-center">Doctor Dashboard</h1>
+<div class="row toggle-card">
+  <div class="col-md-12 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Lab Tests</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+
+        <div id="quarters">
+          <script>
+            var user = JSON.parse(`{{ q | tojson | safe}}`);
+            console.log(user);
+            var mo = user.labTestName
+            // document.getElementById('username').innerHTML = user
+            Highcharts.chart('quarters', {
+              chart: {
+                type: 'line'
+              },
+              title: {
+                text: 'Lab Test Comparision'
+              },
+
+              xAxis: {
+                categories: mo
+              },
+              yAxis: {
+                title: {
+                  text: 'Slots'
+                }
+              },
+              plotOptions: {
+                line: {
+                  dataLabels: {
+                    enabled: true
+                  },
+                  enableMouseTracking: false
+                }
+              },
+              series: [{
+                name: 'Quarter 1',
+                data: user.Q1_labTestCount
+              },
+              {
+                name: 'Quarter 2',
+                data: user.Q2_labTestCount
+              },
+              {
+                name: 'Quarter 3',
+                data: user.Q3_labTestCount
+              },
+              {
+                name: 'Quarter 4',
+                data: user.Q4_labTestCount
+              }
+              ]
+            });
+
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row toggle-card">
+  <div class="col-md-6 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Lab Test Referred By Doctor</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+        <form>
+          <div class="form-group" action="/doctor" method="post" style="display:inline-block;margin-right:30px;">
+            <select required name="monthName" id="monthName" class="form-control">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+
+            <!-- <label for="month">Month</label> -->
+            <!-- <input required class="form-control" name="monthName" style="border-radius: 8px;" type="text"> -->
+          </div>
+          <button class="btn btn-primary" type="button" id="doctorLab">Submit</button>
+        </form>
+        <!-- jhsakhfasjhfjksahfksahfkha -->
+        <div id='lab'>
+          <script>
+            function highChartsLabDep(response) {
+              console.log(response);
+
+              Highcharts.chart('lab', {
+                chart: {
+                  type: 'column',
+                  width: 500,
+                  height: 350
+                },
+                title: {
+                  text: ''
+                },
+                xAxis: {
+                  categories: response.doctorName,
+                  crosshair: true
+                },
+                yAxis: {
+                  min: 0,
+                  title: {
+                    text: 'Lab Test Count'
+                  }
+                },
+                tooltip: {
+                  headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                  pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+                  footerFormat: '</table>',
+                  shared: true,
+                  useHTML: true
+                },
+                plotOptions: {
+                  column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                  }
+                },
+                series: [{
+                  name: 'Hospital1',
+                  data: response.labsReferred
+
+                }]
+              });
+
+            }
+            $(function () {
+              $('#doctorLab').click(function () {
+                $.ajax({
+                  url: '/doctorLabRefer',
+                  data: $('form').serialize(),
+                  type: 'POST',
+                  success: function (response) {
+                    // console.log(response)
+                    // var datas=JSON.parse(response);
+
+                    // console.log(datas)
+                    highChartsLabDep(response);
+                  },
+                  error: function (error) {
+                    console.log(error);
+                  }
+                });
+              });
+            });
+
+          </script>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Dept Laboratory Test Performed</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+        <!-- jhsakhfasjhfjksahfksahfkha -->
+        <form>
+          <div class="form-group" action="/doctor" method="post" style="display:inline-block;margin-right:30px;">
+            <select required name="monthName1" id="monthName1" class="form-control">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+            <!-- <div class="form-group" action="/doctor" method="post" style="display:inline-block;margin-right:30px;"> -->
+            <!-- <label for="month">Month</label> -->
+            <!-- <input required class="form-control" name="monthName1" style="border-radius: 8px;" type="text"> -->
+          </div>
+          <button class="btn btn-primary" type="button" id="depLab">Submit</button>
+        </form>
+        <div id='depLabChart'>
+          <script>
+            function highChartsLab(response) {
+              console.log(response);
+
+              Highcharts.chart('depLabChart', {
+                chart: {
+                  type: 'column',
+                  width: 500,
+                  height: 350
+                },
+                title: {
+                  text: ''
+                },
+                xAxis: {
+                  categories: response.labTestNames,
+                  crosshair: true
+                },
+                yAxis: {
+                  min: 0,
+                  title: {
+                    text: 'Lab Test Count'
+                  }
+                },
+                tooltip: {
+                  headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                  pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+                  footerFormat: '</table>',
+                  shared: true,
+                  useHTML: true
+                },
+                plotOptions: {
+                  column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                  }
+                },
+                series: [{
+                  name: 'Tokyo',
+                  data: response.labTestCount
+
+                }]
+              });
+
+            }
+            $(function () {
+              $('#depLab').click(function () {
+                $.ajax({
+                  url: '/deptLabPerformed',
+                  data: $('form').serialize(),
+                  type: 'POST',
+                  success: function (response) {
+                    // console.log(response)
+                    // var datas=JSON.parse(response);
+
+                    // console.log(datas)
+                    highChartsLab(response);
+                  },
+                  error: function (error) {
+                    console.log(error);
+                  }
+                });
+              });
+            });
+
+          </script>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="col-md-12 col-sm-4 col-xs-12">
+  <div class="x_panel tile">
+    <div class="x_title">
+      <h2>Total / Booked Slots</h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Settings 1</a>
+            </li>
+            <li><a href="#">Settings 2</a>
+            </li>
+          </ul>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content" id="appversions">
+      <!-- jhsakhfasjhfjksahfksahfkha -->
+      <!-- <div id = "quarters">
+      <script>
+        var user = JSON.parse(`{{ q | tojson | safe}}`);
+        console.log(user);
+        var mo = user.labTestName
+        // document.getElementById('username').innerHTML = user
+        Highcharts.chart('quarters', {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'Lab Test Comparision'
+          },
+
+          xAxis: {
+            categories: mo
+          },
+          yAxis: {
+            title: {
+              text: 'Slots'
+            }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: true
+              },
+              enableMouseTracking: false
+            }
+          },
+          series: [{
+            name: 'Quarter 1',
+            data: user.Q1_labTestCount
+          },
+          {
+            name: 'Quarter 2',
+            data: user.Q2_labTestCount
+          },
+          {
+            name: 'Quarter 3',
+            data: user.Q3_labTestCount
+          },
+          {
+            name: 'Quarter 4',
+            data: user.Q4_labTestCount
+          }
+          ]
+        });
+
+      </script>
+      </div> -->
+      <form>
+
+        <div class="form-group" action="/doctor" method="post" style="display:inline-block;margin-right:30px;width:70%;">
+          <select required name="specialization" id="specialization" class="form-control">
+            <option value="Cardiology">Cardiology</option>
+            <option value="Neurology">Neurology</option>
+            <option value="Haematology">Haematology</option>
+            <option value="Orthopaedics">Orthopaedics</option>
+            <option value="Oncology">Oncology</option>
+            <option value="Radiology">Radiology</option>
+            <option value="Endocrinology">Endocrinology</option>
+            <option value="Pathology">Pathology</option>
+            <option value="Anaesthesiology and intensive care">Anaesthesiology and intensive care</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary btn-md" type="button" id="doctorBooked">Submit</button>
+      </form>
+      <div id="specChart">
+        <script>
+          function highCharts(response) {
+            console.log(response);
+            Highcharts.chart('specChart', {
+              chart: {
+                type: 'line'
+              },
+              title: {
+                text: 'Total Slots vs Booked'
+              },
+
+              xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+              },
+              yAxis: {
+                title: {
+                  text: 'Slots'
+                }
+              },
+              plotOptions: {
+                line: {
+                  dataLabels: {
+                    enabled: true
+                  },
+                  enableMouseTracking: false
+                }
+              },
+              series: [{
+                name: 'Total Slots',
+                data: response.Total
+              },
+              {
+                name: 'Bookes Slots',
+                data: response.Booked
+              }
+              ]
+            });
+
+          }
+          $(function () {
+            $('#doctorBooked').click(function () {
+              $.ajax({
+                url: '/specializationVariance',
+                data: $('form').serialize(),
+                type: 'POST',
+                success: function (response) {
+                  // console.log(response)
+                  // var datas=JSON.parse(response);
+
+                  // console.log(datas)
+                  highCharts(response);
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              });
+            });
+          });
+
+        </script>
+        <!-- place for graph -->
+      </div>
+    </div>
+  </div>
+</div>
+</div>

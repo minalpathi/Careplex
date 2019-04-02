@@ -1,0 +1,250 @@
+<h1 class="text-center">Revenue Dashboard</h1>
+<div class="row toggle-card">
+  <div class="col-md-12 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Revenue of Each Hospital in a Network</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+
+        <div id="hospital1Revenue">
+            <h4 id="loading" style="text-align:center">Loading...</h4>
+          <script>
+            var user = JSON.parse(`{{ hospital1 | tojson | safe}}`);
+            var user1 = JSON.parse(`{{ hospital2 | tojson | safe}}`);
+            console.log(user);
+
+            // document.getElementById('username').innerHTML = user
+            Highcharts.stockChart('hospital1Revenue', {
+
+
+              rangeSelector: {
+                selected: 1
+              },
+
+              title: {
+                text: 'Apollo Hospital'
+              },
+
+              series: [{
+                name: 'COST',
+                data: user,
+                tooltip: {
+                  valueDecimals: 2
+                }
+              },
+              ]
+            });
+
+
+          </script>
+        </div>
+        <!-- <div id="hospital2Revenue">
+            <script>
+              var user1 = JSON.parse(`{{ hospital2 | tojson | safe}}`);
+              // console.log(user);
+              var options =  {
+  
+                rangeSelector: {
+                  selected: 1
+                },
+  
+                title: {
+                  text: 'Hospital2'
+                },
+  
+                series: [{
+                  name: 'Cost',
+                  data: user1,
+                  type: 'line',
+                  threshold: null,
+                  tooltip: {
+                    valueDecimals: 0
+                  },
+                  fillColor: {
+                    linearGradient: {
+                      x1: 0,
+                      y1: 0,
+                      x2: 0,
+                      y2: 1
+                    },
+                    stops: [
+                      [0, Highcharts.getOptions().colors[0]],
+                      [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                  }
+                }]
+  }
+              // document.getElementById('username').innerHTML = user
+              Highcharts.stockChart('hospital2Revenue',options);
+              
+            </script>
+          </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row toggle-card">
+  <div class="col-md-6 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Revenue of Fortis Hospital</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+        <!-- jhsakhfasjhfjksahfksahfkha -->
+        <div id="hospital2Revenue">
+          <script>
+            var user1 = JSON.parse(`{{ hospital2 | tojson | safe}}`);
+            console.log(user1)
+            Highcharts.stockChart('hospital2Revenue', {
+
+
+              rangeSelector: {
+                selected: 1
+              },
+
+              title: {
+                text: 'Fortis Hospital'
+              },
+
+              series: [
+              {
+                name: 'COST',
+                data: user1,
+                tooltip: {
+                  valueDecimals: 2
+                }
+              }]
+            });
+              // document.getElementById('username').innerHTML = user
+
+
+          </script>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-4 col-xs-12">
+    <div class="x_panel tile">
+      <div class="x_title">
+        <h2>Revenue of Manipal Hospital</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content" id="appversions">
+        <!-- jhsakhfasjhfjksahfksahfkha -->
+        <div id="hospital3Revenue">
+            <script>
+              var user2 = JSON.parse(`{{ hospital3 | tojson | safe}}`);
+              console.log(user1)
+              Highcharts.stockChart('hospital3Revenue', {
+  
+  
+                rangeSelector: {
+                  selected: 1
+                },
+  
+                title: {
+                  text: 'Manipal Hospital'
+                },
+  
+                series: [
+                {
+                  name: 'COST',
+                  data: user2,
+                  tooltip: {
+                    valueDecimals: 2
+                  }
+                }]
+              });
+                // document.getElementById('username').innerHTML = user
+  
+  
+            </script>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- <div class="col-md-12 col-sm-4 col-xs-12">
+  <div class="x_panel tile">
+    <div class="x_title">
+      <h2>Surgeries Performed</h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link" data-toggle="collapse" href="#appversions"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Settings 1</a>
+            </li>
+            <li><a href="#">Settings 2</a>
+            </li>
+          </ul>
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content" id="appversions">
+      jhsakhfasjhfjksahfksahfkha
+
+
+    </div>
+  </div>
+</div> -->
